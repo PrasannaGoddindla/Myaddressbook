@@ -1,0 +1,25 @@
+---
+- name: Install Tomcat 9 on ubuntu
+hosts: app
+become: app
+tasks: true
+- name: update apt cache
+apt:
+update_cache: yes
+
+- name: Install Java and Tomcat
+apt: 
+name:
+- default-jak-headless
+- tomcat9
+- tomcat9-admin
+state: present
+
+-name: Ensure Tomcat is enabled and running
+servicces:
+name:
+tomcat9
+state: started
+enabled: yes
+ 
+

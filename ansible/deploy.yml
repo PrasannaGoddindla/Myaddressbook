@@ -1,0 +1,23 @@
+---
+- name: Deploy addressBook WaR to tomcat
+hosts: app
+become: app
+vars:
+war_name: addressbook.war
+tasks:
+- name: create temp directory
+file:
+path: /tmp/deploy
+state: directory
+mode: "0755"
+
+- name: copy WAR from jenkins workplace to remote
+copy:
+src: "{{ local_war }}"
+dest: "/var/lib/tomcat9/webapps/{{ war_name }}"
+mode: "0644"
+
+-name: restart Tomcat
+service:
+nam: tomcat9
+state: restarted
